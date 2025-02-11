@@ -6,4 +6,5 @@
     save-cache: ${{ github.ref_name == 'main' }}
     cache-key: warm
     tools: just,cargo-shear@1,dprint
+    components: clippy rustfmt
 ```
