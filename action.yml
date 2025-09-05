@@ -73,7 +73,7 @@ runs:
         save-if: ${{ inputs.save-cache == 'true' }}
 
     - name: Install Tools
-      uses: taiki-e/install-action@14083e64ac8cf1f5e54356df00b9779b23e192a1 # v2
+      uses: taiki-e/install-action@133a13585eb96b576726757d256e9531cd6dddf2 # v2
       if: ${{ inputs.tools }}
       with:
         tool: ${{ inputs.tools }}
