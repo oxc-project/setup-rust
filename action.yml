@@ -38,11 +38,17 @@ runs:
     - name: Print Inputs
       shell: bash
       run: |
-        echo 'components: ${{ inputs.components }}'
-        echo 'tools: ${{ inputs.tools }}'
-        echo 'restore-cache: ${{ inputs.restore-cache }}'
-        echo 'save-cache: ${{ inputs.save-cache }}'
-        echo 'cache-key: ${{ inputs.cache-key }}'
+        echo 'components: ${INPUTS_COMPONENTS}'
+        echo 'tools: ${INPUTS_TOOLS}'
+        echo 'restore-cache: ${INPUTS_RESTORE_CACHE}'
+        echo 'save-cache: ${INPUTS_SAVE_CACHE}'
+        echo 'cache-key: ${INPUTS_CACHE_KEY}'
+      env:
+        INPUTS_COMPONENTS: ${{ inputs.components }}
+        INPUTS_TOOLS: ${{ inputs.tools }}
+        INPUTS_RESTORE_CACHE: ${{ inputs.restore-cache }}
+        INPUTS_SAVE_CACHE: ${{ inputs.save-cache }}
+        INPUTS_CACHE_KEY: ${{ inputs.cache-key }}
 
     - name: Change to minimal profile
       shell: bash
@@ -57,7 +63,9 @@ runs:
     - name: Add Components
       shell: bash
       if: ${{ inputs.components }}
-      run: rustup component add ${{ inputs.components }}
+      run: rustup component add ${INPUTS_COMPONENTS}
+      env:
+        INPUTS_COMPONENTS: ${{ inputs.components }}
 
     - name: Install
       shell: bash
