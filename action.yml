@@ -32,10 +32,10 @@ inputs:
     type: string
     description: cache key prefix
 
-  cache-all-crates:
-    required: false
+  cache-workspace-crates:
     default: false
-    description: "Determines which crates are cached. If `true` all crates will be cached, otherwise only dependent crates will be cached."
+    required: false
+    description: "Similar to cache-all-crates. If `true` the workspace crates will be cached."
 
 runs:
   using: composite
@@ -84,7 +84,7 @@ runs:
       with:
         shared-key: ${{ inputs.cache-key }}
         save-if: ${{ inputs.save-cache == 'true' }}
-        cache-all-crates: ${{ inputs.cache-all-crates }}
+        cache-workspace-crates: ${{ inputs.cache-workspace-crates }}
 
     - name: Install Tools
       uses: taiki-e/install-action@0aa4f22591557b744fe31e55dbfcdfea74a073f7 # v2.61.10
