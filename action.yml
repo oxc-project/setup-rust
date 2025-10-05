@@ -93,16 +93,24 @@ runs:
         tool: ${{ inputs.tools }}
 
     # Cache valgrind and all its dependencies (20MB valgrind + 12MB dependencies)
-    - name: Cache Valgrind and dependencies
+    - name: Save and restore Valgrind cache on main
       uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # 4.3.0
       id: cache-valgrind
-      if: ${{ runner.os == 'Linux' && contains(inputs.tools, 'cargo-codspeed') }}
+      if: ${{ runner.os == 'Linux' && contains(inputs.tools, 'cargo-codspeed') && github.ref_name == 'main' }}
+      with:
+        path: ~/valgrind-cache
+        key: valgrind-3.24.0-codspeed-ubuntu-24.04-v1
+
+    - name: Restore Valgrind cache on PR
+      uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # 4.3.0
+      id: cache-valgrind-restore
+      if: ${{ runner.os == 'Linux' && contains(inputs.tools, 'cargo-codspeed') && github.ref_name != 'main' }}
       with:
         path: ~/valgrind-cache
         key: valgrind-3.24.0-codspeed-ubuntu-24.04-v1
 
     - name: Download Valgrind and dependencies
-      if: ${{ runner.os == 'Linux' && contains(inputs.tools, 'cargo-codspeed') && steps.cache-valgrind.outputs.cache-hit != 'true' }}
+      if: ${{ runner.os == 'Linux' && contains(inputs.tools, 'cargo-codspeed') && steps.cache-valgrind.outputs.cache-hit != 'true' && steps.cache-valgrind-restore.outputs.cache-hit != 'true' }}
       shell: bash
       run: |
         mkdir -p ~/valgrind-cache
