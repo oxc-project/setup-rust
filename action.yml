@@ -87,7 +87,7 @@ runs:
         cache-workspace-crates: ${{ inputs.cache-workspace-crates }}
 
     - name: Install Tools
-      uses: taiki-e/install-action@e797ba6a25dbd8669057e123b02812e16138589e # v2.62.48
+      uses: taiki-e/install-action@0be4756f42223b67aa4b7df5effad59010cbf4b9 # v2.62.51
       if: ${{ inputs.tools }}
       with:
         tool: ${{ inputs.tools }}
