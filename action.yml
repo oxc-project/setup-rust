@@ -37,6 +37,11 @@ inputs:
     required: false
     description: "Similar to cache-all-crates. If `true` the workspace crates will be cached."
 
+  target-dir:
+    required: false
+    type: string
+    description: 'Custom target directory path (for Dev Drive etc). Sets CARGO_TARGET_DIR and configures cache accordingly.'
+
 runs:
   using: composite
   steps:
@@ -78,6 +83,11 @@ runs:
         rustup show
         git restore . # restore rust-toolchain.toml change
 
+    - name: Set CARGO_TARGET_DIR
+      shell: bash
+      if: ${{ inputs.target-dir }}
+      run: echo "CARGO_TARGET_DIR=${{ inputs.target-dir }}" >> "$GITHUB_ENV"
+
     - name: Cache on ${{ github.ref_name }}
       uses: Swatinem/rust-cache@779680da715d629ac1d338a641029a2f4372abb5 # v2.8.2
       if: ${{ inputs.restore-cache == 'true' }}
@@ -85,6 +95,7 @@ runs:
         shared-key: ${{ inputs.cache-key }}
         save-if: ${{ inputs.save-cache == 'true' }}
         cache-workspace-crates: ${{ inputs.cache-workspace-crates }}
+        workspaces: ${{ inputs.target-dir && format('. -> {0}', inputs.target-dir) || '' }}
 
     - name: Install Tools
       uses: taiki-e/install-action@385db9cc6bf65d19775b02084a4b698eaca9a4f2 # v2.68.19
