@@ -89,13 +89,14 @@ runs:
       run: echo "CARGO_TARGET_DIR=${{ inputs.target-dir }}" >> "$GITHUB_ENV"
 
     - name: Cache on ${{ github.ref_name }}
-      uses: oxc-project/rust-cache@044114c167793a4184fb7fc30c2e814591870675 # fix/absolute-target-dir
+      uses: Swatinem/rust-cache@779680da715d629ac1d338a641029a2f4372abb5 # v2.8.2
       if: ${{ inputs.restore-cache == 'true' }}
       with:
         shared-key: ${{ inputs.cache-key }}
         save-if: ${{ inputs.save-cache == 'true' }}
         cache-workspace-crates: ${{ inputs.cache-workspace-crates }}
-        workspaces: ${{ inputs.target-dir && format('. -> {0}', inputs.target-dir) || '' }}
+        cache-targets: ${{ inputs.target-dir && 'false' || 'true' }}
+        cache-directories: ${{ inputs.target-dir || '' }}
 
     - name: Install Tools
       uses: taiki-e/install-action@385db9cc6bf65d19775b02084a4b698eaca9a4f2 # v2.68.19
