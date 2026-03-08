@@ -89,7 +89,7 @@ runs:
       run: echo "CARGO_TARGET_DIR=${{ inputs.target-dir }}" >> "$GITHUB_ENV"
 
     - name: Cache on ${{ github.ref_name }}
-      uses: oxc-project/rust-cache@044114c167793a4184fb7fc30c2e814591870675 # fix/absolute-target-dir
+      uses: oxc-project/rust-cache@11da8522bc3856a8fbc565f1d1530989c793d67d # fix/absolute-target-dir
       if: ${{ inputs.restore-cache == 'true' }}
       with:
         shared-key: ${{ inputs.cache-key }}
