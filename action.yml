@@ -86,7 +86,7 @@ runs:
     - name: Set CARGO_TARGET_DIR
       shell: bash
       if: ${{ inputs.target-dir }}
-      run: echo "CARGO_TARGET_DIR=$INPUTS_TARGET_DIR" >> "$GITHUB_ENV"
+      run: echo "CARGO_TARGET_DIR=$INPUTS_TARGET_DIR" >> "$GITHUB_ENV" # zizmor: ignore[github-env]
       env:
         INPUTS_TARGET_DIR: ${{ inputs.target-dir }}
 
