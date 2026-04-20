@@ -86,7 +86,9 @@ runs:
     - name: Set CARGO_TARGET_DIR
       shell: bash
       if: ${{ inputs.target-dir }}
-      run: echo "CARGO_TARGET_DIR=${{ inputs.target-dir }}" >> "$GITHUB_ENV"
+      run: echo "CARGO_TARGET_DIR=$INPUTS_TARGET_DIR" >> "$GITHUB_ENV"
+      env:
+        INPUTS_TARGET_DIR: ${{ inputs.target-dir }}
 
     - name: Cache on ${{ github.ref_name }}
       uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
