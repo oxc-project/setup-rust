@@ -5,6 +5,6 @@
     # cache `target` directory to avoid download crates
     save-cache: ${{ github.ref_name == 'main' }}
     cache-key: warm
-    tools: just,cargo-shear@1,dprint
+    tools: just,cargo-shear@1.13.1,dprint
     components: clippy rustfmt
 ```
