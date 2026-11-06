@@ -101,7 +101,7 @@ runs:
         cache-directories: ${{ inputs.target-dir || '' }}
 
     - name: Install Tools
-      uses: taiki-e/install-action@e0eafa9a0d485c37f97c0f7beb930a58a2facbac # v2.79.4
+      uses: taiki-e/install-action@b80e2bb2635f28eb98b9fce1e2f0887e1535c6b2 # v2.90.0
       if: ${{ inputs.tools }}
       with:
         tool: ${{ inputs.tools }}
