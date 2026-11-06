@@ -42,6 +42,11 @@ inputs:
     type: string
     description: 'Custom target directory path (for Dev Drive etc). Sets CARGO_TARGET_DIR and configures cache accordingly.'
 
+  workspaces:
+    required: false
+    type: string
+    description: 'Cargo workspace roots to cache, using the rust-cache `$workspace -> $target` syntax. Use this when the build runs in a workspace outside the checkout, such as a Dev Drive copy, without setting CARGO_TARGET_DIR. Defaults to the current directory. Artifacts are still cached from `target-dir` when that input is set.'
+
 runs:
   using: composite
   steps:
@@ -97,6 +102,7 @@ runs:
         shared-key: ${{ inputs.cache-key }}
         save-if: ${{ inputs.save-cache == 'true' }}
         cache-workspace-crates: ${{ inputs.cache-workspace-crates }}
+        workspaces: ${{ inputs.workspaces }}
         cache-targets: ${{ inputs.target-dir && 'false' || 'true' }}
         cache-directories: ${{ inputs.target-dir || '' }}
 
